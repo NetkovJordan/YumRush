@@ -15,7 +15,7 @@ There are 4 roles: ADMIN, DELIVER, SALEPLACEEMPLOYEE, CONSUMER.
 - App main image modified
 - The feature for most loyal customer is already added CR-27
 - Added a filter feature by order status per customer per CR-12
-- Add description to foot item per CR-7
+- Add description to food item per CR-7
 - Modified DB scripts
 - Changed insert script data, added some new attributes to some models
 - Modified functions and views
