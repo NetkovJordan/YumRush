@@ -4,6 +4,6 @@ sudo /opt/certbot/bin/pip install --upgrade pip
 sudo /opt/certbot/bin/pip install certbot certbot-nginx
 sudo ln -s /opt/certbot/bin/certbot /usr/bin/certbot
 certbot --version
-sudo certbot --nginx
+sudo certbot --nginx -d www.yumrush.store
 enter email (may be dummy)
 enter domain
