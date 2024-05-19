@@ -24,7 +24,7 @@ There are 4 roles: ADMIN, DELIVER, SALEPLACEEMPLOYEE, CONSUMER.
 - Using postgre docker image alpine version (more lightweight)
 
 ### AWS:
-- created a security group which allows inbound traffic to ports 80, 443, 22 and 8080.
+- created a security group which allows inbound traffic to ports 80, 443, 22, 5432 and 8080.
 - create key pair for ec2 instance
 - run with AMI amazon linux 2023
 - t3.micro
@@ -33,19 +33,30 @@ There are 4 roles: ADMIN, DELIVER, SALEPLACEEMPLOYEE, CONSUMER.
 
 ### Commands (Commands are subject to change):
 - sudo yum -y update
-- sudo yum -y install docker 
-- docker --version
-- sudo systemctl enable docker.service
+- mkdir yumrush-app
+- nano docker-compose.yaml
+- nano .env
+- sudo yum -y install docker
+- sudo curl -L https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose
+- sudo chmod +x /usr/local/bin/docker-compose
+- sudo docker-compose --version
 - sudo systemctl start docker.service
-- sudo curl -L https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s | tr '[:upper:]' '[:lower:]')-$(uname -m) -o /usr/bin/docker-compose && sudo chmod 755 /usr/bin/docker-compose && docker-compose --version.
-- docker-compose --version
+- sudo systemctl enable docker.service
+- sudo systemctl status docker.service
 - sudo yum -y install nginx
-- sudo systemctl enable nginx && sudo systemctl start nginx
-- systemctl status nginx.service
-- go to etc/nginx/
-- sudo nano nginx.conf
-- change config and save
-- sudo nginx -t 
-- go to /home/ec2-user
-- sudo nano docker-compose.yaml (paste docker compose config)
-- sudo nano .env (paste secret values)
+- sudo systemctl start nginx.service
+- sudo systemctl enable nginx.service
+- sudo systemctl status nginx.service
+- sudo nano etc/nginx/nginx.conf
+- sudo systemctl restart nginx.service
+- sudo nginx -t
+- sudo python3 -m venv /opt/certbot/
+- sudo /opt/certbot/bin/pip install --upgrade pip
+- sudo /opt/certbot/bin/pip install certbot certbot-nginx
+- sudo ln -s /opt/certbot/bin/certbot /usr/bin/certbot
+- certbot --version
+- sudo certbot --nginx -d www.yumrush.store
+- sudo systemctl restart nginx.service
+- sudo nginx -t
+- cd home/ec2-user/yumrush-app
+- sudo docker-compose up -d
